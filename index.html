@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101820">
+<meta name="description" content="دفتر الحصص - سجّل واجبات حصصك ونظّم أسابيعك دون إنترنت.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>دفتر الحصص</title>
+<style>
+:root{color-scheme:dark;--bg:#101820;--card:#192630;--card2:#202F3A;--gold:#D4B483;--text:#EDF2F4;--muted:#9AABB5;--line:#30424e;--green:#7ec8a0;--red:#e58c8c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.55}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.app{max-width:850px;margin:auto;padding:18px 14px 90px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 18px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:15px;background:var(--gold);color:#17212a;display:grid;place-items:center;font-size:25px;font-weight:900}
+h1{font-size:22px;margin:0} .sub{color:var(--muted);font-size:13px}
+.btn{border:1px solid var(--line);background:var(--card2);color:var(--text);border-radius:12px;padding:9px 13px}
+.btn.primary{background:var(--gold);color:#17212a;border-color:var(--gold);font-weight:700}
+.btn.danger{color:var(--red)}.btn.small{padding:5px 9px;font-size:12px}
+.today,.weekbar,.stats,.day,.panel{background:var(--card);border:1px solid #243540;border-radius:18px}
+.today{padding:16px;margin-bottom:13px}.today strong{font-size:18px}.today .sub{margin-top:3px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px;margin-bottom:14px}
+.stat{background:var(--card2);border-radius:13px;padding:10px 12px}.stat b{display:block;font-size:22px;color:var(--gold)}.stat span{font-size:12px;color:var(--muted)}
+.weekbar{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}
+.weekbar b{display:block}.weekbar .sub{font-size:12px}
+.week-actions{display:flex;gap:6px;flex-wrap:wrap}
+.day{margin:11px 0;padding:13px}.day.today-day{border-color:var(--gold);box-shadow:0 0 0 1px #D4B48333}
+.day-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.day-title{font-weight:800;font-size:16px}.day-date{font-size:12px;color:var(--muted)}
+.subject{background:var(--card2);border-radius:13px;padding:10px;margin:8px 0}
+.subject-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}
+.subject-name{font-weight:700;color:var(--gold)}.task-count{font-size:11px;color:var(--muted)}
+.task{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-top:1px solid #34444e}
+.task input[type=checkbox]{accent-color:var(--gold);width:18px;height:18px;margin:3px 0 0}
+.task-text{flex:1;white-space:pre-wrap;overflow-wrap:anywhere}.task.done .task-text{text-decoration:line-through;color:var(--muted)}
+.task-actions{display:flex;gap:4px}.task-actions button{border:0;background:transparent;color:var(--muted);padding:2px 5px}
+.addrow{display:flex;gap:7px}.addrow input{min-width:0;flex:1;background:#15212a;border:1px solid var(--line);border-radius:10px;color:var(--text);padding:9px 10px;outline:none}
+.addrow input:focus,textarea:focus{border-color:var(--gold)}
+.empty{color:var(--muted);font-size:12px;padding:3px 0 6px}
+.panel{padding:15px;margin:14px 0}.panel h2{font-size:17px;margin:0 0 10px}
+.field{display:flex;flex-direction:column;gap:5px;margin:10px 0}.field label{font-size:13px;color:var(--muted)}
+.field input,.field textarea,.field select{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--text)}
+.field textarea{min-height:80px;resize:vertical}
+.searchbar{display:flex;gap:8px;margin:12px 0}.searchbar input{flex:1;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;color:var(--text)}
+.result{background:var(--card2);padding:10px;border-radius:12px;margin:8px 0}.result small{color:var(--muted)}
+dialog{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:18px;width:min(92vw,500px);padding:18px}
+dialog::backdrop{background:#000a}.modal-actions{display:flex;gap:8px;justify-content:flex-start;margin-top:12px}
+.day-editor{display:grid;grid-template-columns:1fr;gap:8px}.day-editor label{color:var(--muted);font-size:13px}.day-editor textarea{width:100%;min-height:55px;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px;color:var(--text)}
+footer{text-align:center;color:var(--muted);font-size:11px;margin-top:25px}
+.hidden{display:none!important}
+@media(min-width:650px){.stats{grid-template-columns:repeat(2,1fr)}.day{padding:16px}.subject{padding:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand"><div class="logo">د</div><div><h1>دفتر الحصص</h1><div class="sub">واجباتك مرتبة، أسبوعًا بعد أسبوع</div></div></div><button class="btn" id="installBtn" hidden>تثبيت التطبيق</button></header>
+<section class="today"><strong id="todayText">اليوم</strong><div class="sub">جدولك الأسبوعي يتجدد تلقائيًا حسب التاريخ</div></section>
+<section class="stats"><div class="stat"><b id="remaining">0</b><span>واجبات متبقية</span></div><div class="stat"><b id="completed">0</b><span>واجبات مكتملة</span></div></section>
+<section class="weekbar"><div><b id="weekLabel">الأسبوع الحالي</b><div class="sub" id="weekDates"></div></div><div class="week-actions"><button class="btn small" id="prevWeek">السابق</button><button class="btn small" id="currentWeek">الحالي</button><button class="btn small" id="nextWeek">التالي</button></div></section>
+<main id="weekView"></main>
+<section class="panel"><h2>البحث في الواجبات</h2><div class="searchbar"><input id="searchInput" placeholder="ابحث بكلمة من الواجب أو اسم المادة"><button class="btn" id="searchBtn">بحث</button></div><div id="searchResults" class="sub">اكتب كلمة للبحث في كل الأسابيع المحفوظة.</div></section>
+<section class="panel"><h2>إدارة جدول الحصص</h2><p class="sub">غيّر المواد لكل يوم. التعديل يطبّق على الأسابيع الحالية والقادمة، ولا يحذف واجباتك القديمة.</p><div id="scheduleEditor" class="day-editor"></div><button class="btn primary" id="saveSchedule">حفظ الجدول</button></section>
+<section class="panel"><h2>تنظيف الواجبات</h2><p class="sub">يمكنك حذف كل الواجبات المكتملة بعد التأكيد. لن تُحذف الواجبات غير المكتملة.</p><button class="btn danger" id="clearDone">مسح الواجبات المكتملة</button></section>
+<footer>يحفظ دفتر الحصص بياناتك على هذا الجهاز فقط. لا يحتاج إلى حساب أو إنترنت بعد التثبيت.</footer>
+</div>
+<dialog id="editDialog"><form method="dialog" id="editForm"><h2>تعديل الواجب</h2><div class="field"><label for="editText">نص الواجب</label><textarea id="editText" required></textarea></div><div class="modal-actions"><button class="btn primary" value="save">حفظ</button><button class="btn" value="cancel">إلغاء</button></div></form></dialog>
+<script src="app.js"></script>
+</body></html>
